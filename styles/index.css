@@ -1,0 +1,18 @@
+body {
+    background-color: #bdd8eb
+}
+
+.center {
+    border: 5px solid #fcfcfa;
+    display: flex;
+    justify-content: center;
+}
+.container {
+    margin-top: 250px
+}
+
+.microphone {
+    border-top-right-radius: 32px !important;
+    border-bottom-right-radius: 32px !important;
+    background-color: #fff
+}
