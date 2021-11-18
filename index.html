@@ -13,10 +13,19 @@
         <img src="https://img.icons8.com/clouds/200/000000/amazon.png"/>
     </div>
     <div class="bar">
-      <input class="searchbar" type="text" title="Search">
+      <input class="searchbar" id ="input" type="text" title="Search">
       <a href="#"> <img class="voice" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Google_mic.svg/716px-Google_mic.svg.png" title="Search by Voice"></a>
     </div>
     <div class="buttons">
-      <button class="button" type="button">Amazon Search</button>
+      <button onclick="Search()" button class="button" type="button">Amazon Search</button>
      </div>
   </body>
+<script>
+    function Search() 
+    {
+        console.log("Searching");
+        var search = document.getElementById("input").value;
+        window.location.href = "https://www.amazon.com/s?k=" + search;
+        console.log("Searching for " + search);
+    }
+</script>
