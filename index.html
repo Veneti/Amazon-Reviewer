@@ -26,24 +26,22 @@
     src = "https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"
     function Search() 
     {
-      console.log("Searching");
       var search = document.getElementById("input").value;
       console.log("Searching for " + search);
-      const xhr = new XMLHttpRequest();
       const data = null
+      const xhr = new XMLHttpRequest();
       xhr.withCredentials = true;
 
       xhr.addEventListener("readystatechange", function () {
         if (this.readyState === this.DONE) {
           let mysearch = JSON.parse(this.responseText);
-          var avgrating = mysearch.average_rating;
           console.log(mysearch);
         }
       });
-
-      xhr.open("GET", "https://amazon-data-scraper36.p.rapidapi.com/products/B086FVNKYX/reviews?apiKey=%3CREQUIRED%3E");
-      xhr.setRequestHeader("x-rapidapi-host", "amazon-data-scraper36.p.rapidapi.com");
+      xhr.open("GET", "https://amazon-data-scraper15.p.rapidapi.com/products/B08N5VSQNG/reviews?api_key=55d4588fcd6ce77b428b73d97f714195");
+      xhr.setRequestHeader("x-rapidapi-host", "amazon-data-scraper15.p.rapidapi.com");
       xhr.setRequestHeader("x-rapidapi-key", "9e6e243705mshffbc8d0d09663c3p101aa7jsn3da636feaa26");
+
       xhr.send(data);
     }
   </script>
