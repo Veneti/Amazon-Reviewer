@@ -29,7 +29,7 @@
       var search = document.getElementById("input").value;
       console.log("Searching for " + search);
       const data = null;
-
+      const reviewlist = [];
       const xhr = new XMLHttpRequest();
       xhr.withCredentials = true;
 
@@ -37,6 +37,10 @@
         if (this.readyState === this.DONE) {
           let mysearch = JSON.parse(this.responseText);
           console.log(mysearch);
+          for (let i = 0; i < mysearch.reviews.length; i++) {
+            reviewlist.push(mysearch.reviews[i].review);
+          }
+          console.log(reviewlist);
         }
       });
 
