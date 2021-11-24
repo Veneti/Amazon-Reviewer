@@ -53,27 +53,28 @@
 
           var productPicture = mysearch.product.image;
           console.log(productPicture);
-          var pos = 0;
-          var neg = 0;
-          const data2 = JSON.stringify({
-          "language": "english",
-          "text": reviewlist[1]
-          });
-          const xhr = new XMLHttpRequest();
-          xhr.withCredentials = true;
+          for (let i = 0; i < reviewlist.length; i++) 
+          {
+              const data2 = JSON.stringify({
+              "language": "english",
+              "text": reviewlist[i]
+            });
+            const xhr = new XMLHttpRequest();
+            xhr.withCredentials = true;
 
-          xhr.addEventListener("readystatechange", function () {
-            if (this.readyState === this.DONE) {
-              console.log(this.responseText);
-            }
-          });
+            xhr.addEventListener("readystatechange", function () {
+              if (this.readyState === this.DONE) {
+                console.log(this.responseText);
+              }
+            });
 
-          xhr.open("POST", "https://text-analysis12.p.rapidapi.com/sentiment-analysis/api/v1.1");
-          xhr.setRequestHeader("content-type", "application/json");
-          xhr.setRequestHeader("x-rapidapi-host", "text-analysis12.p.rapidapi.com");
-          xhr.setRequestHeader("x-rapidapi-key", "9e6e243705mshffbc8d0d09663c3p101aa7jsn3da636feaa26");
+            xhr.open("POST", "https://text-analysis12.p.rapidapi.com/sentiment-analysis/api/v1.1");
+            xhr.setRequestHeader("content-type", "application/json");
+            xhr.setRequestHeader("x-rapidapi-host", "text-analysis12.p.rapidapi.com");
+            xhr.setRequestHeader("x-rapidapi-key", "9e6e243705mshffbc8d0d09663c3p101aa7jsn3da636feaa26");
 
-          xhr.send(data2);
+            xhr.send(data2);
+          }
         }
       });
 
