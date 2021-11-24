@@ -31,6 +31,8 @@
       const data = null;
       const reviewlist = [];
       var overallscore = 0;
+      var postitve = 0;
+      var negative = 0;
       var sentimentscore = "";
       const xhr = new XMLHttpRequest();
       xhr.withCredentials = true;
@@ -53,6 +55,7 @@
 
           var productPicture = mysearch.product.image;
           console.log(productPicture);
+          let dict = {};
           for (let i = 0; i < reviewlist.length; i++) 
           {
               const data2 = JSON.stringify({
@@ -61,13 +64,21 @@
             });
             const xhr = new XMLHttpRequest();
             xhr.withCredentials = true;
-
             xhr.addEventListener("readystatechange", function () {
               if (this.readyState === this.DONE) {
-                console.log(this.responseText);
+                let sentimentanalysis = JSON.parse(this.responseText);
+                postitve += sentimentanalysis.aggregate_sentiment.pos;
+                negative += sentimentanalysis.aggregate_sentiment.neg;
+                console.log(postitve, negative);
+                if (!dict[i])
+                {
+                  dict[i] = []
+                }
+                dict[i].push([sentimentanalysis.aggregate_sentiment.pos, sentimentanalysis.aggregate_sentiment.neg]);
               }
+              console.log(postitve, negative);
+              //console.log(dict);
             });
-
             xhr.open("POST", "https://text-analysis12.p.rapidapi.com/sentiment-analysis/api/v1.1");
             xhr.setRequestHeader("content-type", "application/json");
             xhr.setRequestHeader("x-rapidapi-host", "text-analysis12.p.rapidapi.com");
@@ -75,6 +86,7 @@
 
             xhr.send(data2);
           }
+          console.log(postitve,negative);
         }
       });
 
