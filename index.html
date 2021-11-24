@@ -28,7 +28,8 @@
     {
       var search = document.getElementById("input").value;
       console.log("Searching for " + search);
-      const data = null
+      const data = null;
+
       const xhr = new XMLHttpRequest();
       xhr.withCredentials = true;
 
@@ -38,8 +39,9 @@
           console.log(mysearch);
         }
       });
-      xhr.open("GET", "https://amazon-data-scraper15.p.rapidapi.com/products/B08N5VSQNG/reviews?api_key=55d4588fcd6ce77b428b73d97f714195");
-      xhr.setRequestHeader("x-rapidapi-host", "amazon-data-scraper15.p.rapidapi.com");
+
+      xhr.open("GET", "https://easy-amazon-data-scraper.p.rapidapi.com/products/"+search+"/reviews?api_key=3ce35a11909b4ae05ec72636a71a02cf");
+      xhr.setRequestHeader("x-rapidapi-host", "easy-amazon-data-scraper.p.rapidapi.com");
       xhr.setRequestHeader("x-rapidapi-key", "9e6e243705mshffbc8d0d09663c3p101aa7jsn3da636feaa26");
 
       xhr.send(data);
