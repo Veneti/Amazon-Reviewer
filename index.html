@@ -38,8 +38,6 @@
       console.log("Searching for " + search);
       const data = null;
       const reviewlist = [];
-      var postitve = 0;
-      var negative = 0;
       var possentiment = 0;
       var  negsentiment= 0;
       var posreview = "";
@@ -81,8 +79,6 @@
             xhr.addEventListener("readystatechange", function () {
               if (this.readyState === this.DONE) {
                 let sentimentanalysis = JSON.parse(this.responseText);
-                postitve += sentimentanalysis.aggregate_sentiment.pos;
-                negative += sentimentanalysis.aggregate_sentiment.neg;
                 //finding overall sentiment value
                 if (sentimentanalysis.aggregate_sentiment.sentiment == "negative")
                 {
