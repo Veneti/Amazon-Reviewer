@@ -53,20 +53,16 @@
       xhr.addEventListener("readystatechange", function () {
         if (this.readyState === this.DONE) {
           let mysearch = JSON.parse(this.responseText);
-          console.log(mysearch);
           for (let i = 0; i < mysearch.reviews.length; i++) {
             reviewlist.push(mysearch.reviews[i].review);
           }
           
           var rating = mysearch.average_rating;
           var rating = rating + " out of 5 Customer Reviews";
-          console.log(rating);
 
           var productName = mysearch.product.name;
-          console.log(productName);
 
           var productPicture = mysearch.product.image;
-          console.log(productPicture);
           let dict = {};
           for (let i = 0; i < reviewlist.length; i++) 
           {
