@@ -16,7 +16,20 @@
   <div class="buttons">
     <button onclick="Search()" button class="button" type="button">Amazon Search</button>
   </div>
-  </body>
+  
+  <h5>Product Name</h5>
+  <div id = "Name"></div>
+  <h5>Product Image</h5>
+  <div id = "productimage"></div>
+  <h5>Average Review</h5>
+  <p id = "AvgRating"></p>
+  <h5>Top Postive Review</h5>
+  <p id = "PReview"></p>
+  <h5>Top Critical Review</h5>
+  <p id = "NReview"></p>
+  <h5>Overall Sentiment Analysis</h5>
+  <p id = "Overall"></p>
+  
   <script>
     src = "https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"
     function Search() 
@@ -25,7 +38,6 @@
       console.log("Searching for " + search);
       const data = null;
       const reviewlist = [];
-      var overallscore = 0;
       var postitve = 0;
       var negative = 0;
       var possentiment = 0;
@@ -33,6 +45,10 @@
       var posreview = "";
       var negreview = "";
       var sentimentscore = "";
+      var sentimentneg = 0;
+      var sentimentneu = 0;
+      var sentimentpos = 0;
+      
       const xhr = new XMLHttpRequest();
       xhr.withCredentials = true;
 
@@ -43,7 +59,6 @@
           for (let i = 0; i < mysearch.reviews.length; i++) {
             reviewlist.push(mysearch.reviews[i].review);
           }
-          console.log(reviewlist);
           
           var rating = mysearch.average_rating;
           var rating = rating + " out of 5 Customer Reviews";
@@ -68,24 +83,58 @@
                 let sentimentanalysis = JSON.parse(this.responseText);
                 postitve += sentimentanalysis.aggregate_sentiment.pos;
                 negative += sentimentanalysis.aggregate_sentiment.neg;
+                //finding overall sentiment value
+                if (sentimentanalysis.aggregate_sentiment.sentiment == "negative")
+                {
+                  sentimentneg +=1
+                }
+                else if (sentimentanalysis.aggregate_sentiment.sentiment == "neutral")
+                {
+                  sentimentneu+=1
+                }
+                else
+                {
+                  sentimentpos +=1
+                }
+                var temp = 0
+                if (sentimentneg > sentimentneu && sentimentneg > sentimentpos)
+                {
+                  sentimentscore = "Negative"
+                }
+                else if (sentimentneu > sentimentneg && sentimentneu > sentimentpos)
+                {
+                  sentimentscore = "Neutral"
+                }
+                else
+                {
+                  sentimentscore = "Positive"
+                }
+                //finding the review that has the highest positive and negative sentiment
                 if (sentimentanalysis.aggregate_sentiment.pos > possentiment)
                 {
-                    possentiment = sentimentanalysis.aggregate_sentiment.pos
-                    posreview = reviewlist[i]
+                  possentiment = sentimentanalysis.aggregate_sentiment.pos;
+                  posreview = reviewlist[i];
                 }
                 if (sentimentanalysis.aggregate_sentiment.neg > negsentiment)
                 {
-                  negsentiment = sentimentanalysis.aggregate_sentiment.neg
-                  negreview = reviewlist[i]
+                  negsentiment = sentimentanalysis.aggregate_sentiment.neg;
+                  negreview = reviewlist[i];
                 }
                 if (!dict[i])
                 {
-                  dict[i] = []
+                  dict[i] = [];
                 }
                 dict[i].push([sentimentanalysis.aggregate_sentiment.pos, sentimentanalysis.aggregate_sentiment.neg]);
+                if (i == reviewlist.length-1) //at the end of looping through all the reviews that we have we'll then print out the information
+                {
+                  document.getElementById("Name").innerHTML = productName;
+                  document.getElementById("productimage").innerHTML = productPicture;
+                  document.getElementById("AvgRating").innerHTML = rating;
+                  document.getElementById("PReview").innerHTML = posreview;
+                  document.getElementById("NReview").innerHTML = negreview;
+                  document.getElementById("Overall").innerHTML = sentimentscore;
+                }
               }
-              console.log(posreview)
-              console.log(negreview)
             });
             xhr.open("POST", "https://text-analysis12.p.rapidapi.com/sentiment-analysis/api/v1.1");
             xhr.setRequestHeader("content-type", "application/json");
@@ -94,6 +143,7 @@
 
             xhr.send(data2);
           }
+          
         }
       });
 
