@@ -1,6 +1,9 @@
 <link rel="stylesheet" type="text/css" href="styles/index.css">
 <!DOCTYPE html>
 <html>
+  <head>
+    <title>Amazon Reviewer</title>
+  </head>
 <center>
   <header>
   </header>
@@ -8,7 +11,7 @@
     <img src="https://img.icons8.com/clouds/200/000000/amazon.png" />
   </div>
   <div class="bar">
-    <input class="searchbar" id="input" type="text" title="Search">
+    <input class="searchbar" id="input" type="text" title="Search"  placeholder="Product ID">
     <a href="#"> <img class="voice"
         src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Google_mic.svg/716px-Google_mic.svg.png"
         title="Search by Voice"></a>
@@ -20,7 +23,7 @@
   <h5>Product Name</h5>
   <div id = "Name"></div>
   <h5>Product Image</h5>
-  <div id = "productimage"></div>
+  <img id = "productimage" src="">
   <h5>Average Review</h5>
   <p id = "AvgRating"></p>
   <h5>Top Postive Review</h5>
@@ -53,6 +56,7 @@
       xhr.addEventListener("readystatechange", function () {
         if (this.readyState === this.DONE) {
           let mysearch = JSON.parse(this.responseText);
+          console.log(mysearch);
           for (let i = 0; i < mysearch.reviews.length; i++) {
             reviewlist.push(mysearch.reviews[i].review);
           }
@@ -75,6 +79,7 @@
             xhr.addEventListener("readystatechange", function () {
               if (this.readyState === this.DONE) {
                 let sentimentanalysis = JSON.parse(this.responseText);
+                console.log(sentimentanalysis)
                 //finding overall sentiment value
                 if (sentimentanalysis.aggregate_sentiment.sentiment == "negative")
                 {
@@ -120,7 +125,8 @@
                 if (i == reviewlist.length-1) //at the end of looping through all the reviews that we have we'll then print out the information
                 {
                   document.getElementById("Name").innerHTML = productName;
-                  document.getElementById("productimage").innerHTML = productPicture;
+                  //document.getElementById("productimage").innerHTML = productPicture;
+                  document.getElementById("productimage").src = productPicture;
                   document.getElementById("AvgRating").innerHTML = rating;
                   document.getElementById("PReview").innerHTML = posreview;
                   document.getElementById("NReview").innerHTML = negreview;
