@@ -47,9 +47,7 @@
       var posreview = "";
       var negreview = "";
       var sentimentscore = "";
-      var sentimentneg = 0;
-      var sentimentneu = 0;
-      var sentimentpos = 0;
+      var sentiments = [0,0,0];
       
       const xhr = new XMLHttpRequest();
       xhr.withCredentials = true;
@@ -80,32 +78,35 @@
             xhr.addEventListener("readystatechange", function () {
               if (this.readyState === this.DONE) {
                 let sentimentanalysis = JSON.parse(this.responseText);
-                console.log(sentimentanalysis)
+                //console.log(sentimentanalysis)
                 //finding overall sentiment value
-                if (sentimentanalysis.aggregate_sentiment.sentiment == "negative")
+                //console.log(sentimentanalysis.sentiment)
+                if (sentimentanalysis.sentiment == "negative")
                 {
-                  sentimentneg +=1
+                  sentiments[0] +=1;
                 }
-                else if (sentimentanalysis.aggregate_sentiment.sentiment == "neutral")
+                else if (sentimentanalysis.sentiment == "neutral")
                 {
-                  sentimentneu+=1
-                }
-                else
-                {
-                  sentimentpos +=1
-                }
-                var temp = 0
-                if (sentimentneg > sentimentneu && sentimentneg > sentimentpos)
-                {
-                  sentimentscore = "Negative"
-                }
-                else if (sentimentneu > sentimentneg && sentimentneu > sentimentpos)
-                {
-                  sentimentscore = "Neutral"
+                  sentiments[1] +=1;
                 }
                 else
                 {
-                  sentimentscore = "Positive"
+                  sentiments[2] +=1;
+                }
+                console.log(sentiments);
+                var max = Math.max(...sentiments);
+                var index = sentiments.indexOf(max)
+                if (index == 0)
+                {
+                  sentimentscore = "Negative";
+                }
+                else if (index == 1)
+                {
+                  sentimentscore = "Neutral";
+                }
+                else
+                {
+                  sentimentscore = "Positve";
                 }
                 //finding the review that has the highest positive and negative sentiment
                 if (sentimentanalysis.aggregate_sentiment.pos > possentiment)
